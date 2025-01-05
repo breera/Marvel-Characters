@@ -54,4 +54,7 @@ dependencies {
     implementation(project(":theme"))
     implementation(project(":core"))
     implementation(libs.bundles.coil)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }
