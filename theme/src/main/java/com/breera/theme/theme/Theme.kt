@@ -1,6 +1,5 @@
-package com.breera.marvelcharactersapp.ui.theme
+package com.breera.theme.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -12,24 +11,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = red,
+    onPrimary = white,
+    background = darkGradient,
+    onBackground = white,
+    surface = white,
+    onSurface = black
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    primary = red,
+    onPrimary = white,
+    background = darkGradient,
+    onBackground = white,
+    surface = white,
+    onSurface = black
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
     onPrimary = Color.White,
     onSecondary = Color.White,
     onTertiary = Color.White,
     onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
     */
 )
 
@@ -37,7 +40,7 @@ private val LightColorScheme = lightColorScheme(
 fun MarvelCharactersAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -52,7 +55,7 @@ fun MarvelCharactersAppTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = MarvelCharacters_Typography,
         content = content
     )
 }
