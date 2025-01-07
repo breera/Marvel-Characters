@@ -1,4 +1,4 @@
-package com.breera.character_feature
+package com.breera.character_feature.domain
 
 import com.breera.character_feature.domain.model.CharactersModel
 

@@ -1,6 +1,7 @@
 package com.breera.core.presentation
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
@@ -8,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
@@ -24,7 +26,8 @@ fun LoadImage(
     modifier: Modifier = Modifier,
     placeholder: Int = 0,
     contentScale: ContentScale = ContentScale.Crop,
-    size: Dp = 60.dp
+    size: Dp = 60.dp,
+    loadersize: Dp = 30.dp
 ) {
     // State for image loading result
     var imageLoadResult by remember { mutableStateOf<Result<Painter>?>(null) }
@@ -44,20 +47,32 @@ fun LoadImage(
             imageLoadResult = Result.failure(it.result.throwable)
         }
     )
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center
+    ) {
+        // Display the image or a loading spinner,
+        when (val result = imageLoadResult) {
+            null -> {
+                Box(
+                    Modifier
+                        .size(loadersize),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(
+                        color = Color.White
+                    )
+                }
+            }
 
-    // Display the image or a loading spinner,
-    when (val result = imageLoadResult) {
-        null -> {
-            CircularProgressIndicator(color = Color.Black, modifier = modifier.size(size))
-        }
-
-        else -> {
-            Image(
-                painter = if (result.isSuccess) painter else painterResource(placeholder),
-                contentDescription = contentDescription,
-                contentScale = if (result.isSuccess) contentScale else ContentScale.Fit,
-                modifier = modifier.size(size)
-            )
+            else -> {
+                Image(
+                    painter = if (result.isSuccess) painter else painterResource(placeholder),
+                    contentDescription = contentDescription,
+                    contentScale = if (result.isSuccess) contentScale else ContentScale.Fit,
+                    modifier = modifier.size(size)
+                )
+            }
         }
     }
 }

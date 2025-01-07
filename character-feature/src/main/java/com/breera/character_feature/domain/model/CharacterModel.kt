@@ -36,20 +36,20 @@ data class Item(
 @Serializable
 data class Events(
     var collectionURI: String? = "",
-    var items: List<Item?>? = listOf()
+    var items: List<Item>? = listOf()
 )
 
 @Serializable
 data class Series(
     var collectionURI: String? = "",
-    var items: List<Item?>? = listOf()
+    var items: List<Item>? = listOf()
 )
 
 
 @Serializable
 data class Stories(
     var collectionURI: String? = "",
-    var items: List<Item?>? = listOf()
+    var items: List<Item>? = listOf()
 )
 
 @Serializable

@@ -1,7 +1,7 @@
 package com.breera.character_feature.di
 
-import com.breera.character_feature.CharactersRepository
 import com.breera.character_feature.data.remote.CharactersRepositoryImpl
+import com.breera.character_feature.domain.CharactersRepository
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module

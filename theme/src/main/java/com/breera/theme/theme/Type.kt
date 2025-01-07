@@ -12,18 +12,18 @@ val MarvelCharacters_Typography: Typography
     @Composable
     get() = Typography(
         bodyMedium = TextStyle(
-            fontSize = 14.ssp,
-            fontWeight = FontWeight.Medium,
-            color = MaterialTheme.colorScheme.onPrimary
-        ),
-        titleMedium = TextStyle(
             fontSize = 12.ssp,
+            fontWeight = FontWeight.Medium,
+            color = MaterialTheme.colorScheme.onPrimary // white
+        ),
+        titleSmall = TextStyle(
+            fontSize = 10.ssp,
             fontWeight = FontWeight.Normal,
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.primary // white
         ),
         labelMedium = TextStyle(
             fontSize = 10.ssp,
             fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.onPrimary
         )
     )
