@@ -2,21 +2,20 @@ package com.breera.character_feature.presentation.previewdata
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.breera.character_feature.domain.model.Characters
 
 /**
- * A fake implementation of PagingSource for previewing and testing purposes.
+ * A fake implementation of `PagingSource` for testing purposes, designed to work with any type of data.
  *
- * This class is designed to simulate a data source for paginated content,
- * allowing you to test and preview UI components without needing a live data connection.
- * It provides a fixed list of character data, making it ideal for scenarios where
- * you want to focus on UI logic without the unpredictability of real network calls.
+ * This class provides a simple way to simulate paging behavior by returning a predefined list of data
+ * as a single page. It can be used in unit tests to verify paging logic without the need for a real
+ * data source.
  *
- * @property data A list of Characters used as the static data source.
+ * @param T The type of data being paged.
+ * @property data A list of data items of type `T` to be returned as a single page.
  */
 
-class PagingSourceFake(private val data: List<Characters>) : PagingSource<Int, Characters>() {
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Characters> {
+class PagingSourceFake<T : Any>(private val data: List<T>) : PagingSource<Int, T>() {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, T> {
         return LoadResult.Page(
             data = data,
             prevKey = null,
@@ -24,5 +23,5 @@ class PagingSourceFake(private val data: List<Characters>) : PagingSource<Int, C
         )
     }
 
-    override fun getRefreshKey(state: PagingState<Int, Characters>): Int? = null
+    override fun getRefreshKey(state: PagingState<Int, T>): Int? = null
 }

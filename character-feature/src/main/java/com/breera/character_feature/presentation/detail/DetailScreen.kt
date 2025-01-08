@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
@@ -31,12 +30,17 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.breera.character_feature.R
 import com.breera.character_feature.domain.model.Characters
-import com.breera.character_feature.domain.model.Item
+import com.breera.character_feature.domain.model.SingleSectionInfoModel
 import com.breera.character_feature.domain.model.Url
-import com.breera.character_feature.presentation.detail.component.SectionItem
+import com.breera.character_feature.presentation.detail.component.SectionLazyRowComposable
 import com.breera.character_feature.presentation.detail.component.SectionsTitle
+import com.breera.character_feature.presentation.previewdata.PagingSourceFake
 import com.breera.character_feature.presentation.previewdata.character
 import com.breera.core.presentation.LoadImage
 import com.breera.theme.theme.MarvelCharactersAppTheme
@@ -53,8 +57,18 @@ import ir.kaaveh.sdpcompose.sdp
 @Composable
 fun DetailScreenRoot(viewModel: DetailVM, onClick: (DetailAction) -> Unit) {
     val state by viewModel.characterDetailState.collectAsStateWithLifecycle()
+    val comicList = viewModel.comicSectionInfo.collectAsLazyPagingItems()
+    val storiesList = viewModel.storiesSectionInfo.collectAsLazyPagingItems()
+    val seriesList = viewModel.seriesSectionInfo.collectAsLazyPagingItems()
+    val eventsList = viewModel.eventsSectionInfo.collectAsLazyPagingItems()
     state.character?.let { character ->
-        DetailScreen(character) {
+        DetailScreen(
+            character = character,
+            comicList = comicList,
+            storiesList = storiesList,
+            seriesList = seriesList,
+            eventsList = eventsList
+        ) {
             onClick.invoke(it)
         }
     }
@@ -64,11 +78,22 @@ fun DetailScreenRoot(viewModel: DetailVM, onClick: (DetailAction) -> Unit) {
  * Displays the detailed view of a character, including sections for comics, series, stories, and events.
  *
  * @param character The character object containing all the details to be displayed.
- * @param onClick A lambda function to handle click actions, defined by the DetailAction.
+ * @param comicList A `LazyPagingItems` object representing the list of comics associated with the character.
+ * @param storiesList A `LazyPagingItems` object representing the list of stories associated with the character.
+ * @param seriesList A `LazyPagingItems` object representing the list of series associated with the character.
+ * @param eventsList A `LazyPagingItems` object representing the list of events associated with the character.
+ * @param onClick A lambda function to handle click actions, defined by the `DetailAction`.
  */
 
 @Composable
-fun DetailScreen(character: Characters, onClick: (DetailAction) -> Unit) {
+fun DetailScreen(
+    character: Characters,
+    comicList: LazyPagingItems<SingleSectionInfoModel>,
+    storiesList: LazyPagingItems<SingleSectionInfoModel>,
+    seriesList: LazyPagingItems<SingleSectionInfoModel>,
+    eventsList: LazyPagingItems<SingleSectionInfoModel>,
+    onClick: (DetailAction) -> Unit
+) {
     MarvelCharactersAppTheme {
         Box(Modifier.fillMaxSize()) {
             LoadImage(
@@ -93,33 +118,37 @@ fun DetailScreen(character: Characters, onClick: (DetailAction) -> Unit) {
                 }
                 if (character.comics?.items.isNullOrEmpty().not()) {
                     item {
-                        Section(
-                            title = stringResource(R.string.comics),
-                            comics = character.comics?.items ?: emptyList()
+                        SectionLazyRowComposable(
+                            comicList,
+                            character.comics?.items ?: emptyList(),
+                            stringResource(R.string.comics)
                         )
                     }
                 }
                 if (character.series?.items.isNullOrEmpty().not()) {
                     item {
-                        Section(
-                            title = stringResource(R.string.series),
-                            comics = character.series?.items ?: emptyList()
+                        SectionLazyRowComposable(
+                            seriesList,
+                            character.series?.items ?: emptyList(),
+                            stringResource(R.string.series)
                         )
                     }
                 }
                 if (character.stories?.items.isNullOrEmpty().not()) {
                     item {
-                        Section(
-                            title = stringResource(R.string.stories),
-                            comics = character.stories?.items ?: emptyList()
+                        SectionLazyRowComposable(
+                            storiesList,
+                            character.stories?.items ?: emptyList(),
+                            stringResource(R.string.stories)
                         )
                     }
                 }
                 if (character.events?.items.isNullOrEmpty().not()) {
                     item {
-                        Section(
-                            title = stringResource(R.string.events),
-                            comics = character.events?.items ?: emptyList()
+                        SectionLazyRowComposable(
+                            eventsList,
+                            character.events?.items ?: emptyList(),
+                            stringResource(R.string.events)
                         )
                     }
                 }
@@ -132,23 +161,6 @@ fun DetailScreen(character: Characters, onClick: (DetailAction) -> Unit) {
                     }
                 }
             }
-        }
-    }
-}
-
-/**
- * Displays a section of items, such as comics, series, stories, or events.
- *
- * @param title The title of the section.
- * @param comics A list of items to be displayed in the section.
- */
-
-@Composable
-fun Section(title: String, comics: List<Item>) {
-    SectionsTitle(title)
-    LazyRow {
-        items(comics) {
-            SectionItem(it)
         }
     }
 }
@@ -252,5 +264,19 @@ fun RelatedLinks(url: Url?) {
 @Preview
 @Composable
 fun DetailScreenPreview() {
-    DetailScreen(character = character) {}
+    val dummyList = (0..100).map {
+        SingleSectionInfoModel(
+            id = 4924,
+            name = "Marsha Berry",
+            imageUrl = "http://www.bing.com/search?q=nec"
+        )
+    }
+    // Create a fake LazyPagingItems using a Pager
+    val pager = Pager(PagingConfig(pageSize = 1)) {
+        PagingSourceFake(dummyList)
+    }.flow.collectAsLazyPagingItems()
+    DetailScreen(
+        character = character,
+        comicList = pager, storiesList = pager, seriesList = pager, eventsList = pager
+    ) {}
 }

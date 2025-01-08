@@ -5,6 +5,7 @@ import com.breera.character_feature.data.remote.DefaultRepository
 import com.breera.character_feature.data.remote.DefaultRepositoryImpl
 import com.breera.character_feature.domain.CharactersRepository
 import com.breera.character_feature.domain.GetCharactersUseCase
+import com.breera.character_feature.domain.GetSectionInfoUseCase
 import com.breera.character_feature.presentation.detail.DetailVM
 import com.breera.character_feature.presentation.home.HomeVM
 import com.breera.character_feature.presentation.shareddata.ShareViewModel
@@ -20,7 +21,8 @@ val homeModule = module {
     singleOf(::CharactersRepositoryImpl).bind<CharactersRepository>()
     singleOf(::DefaultRepositoryImpl).bind<DefaultRepository>()
     single { GetCharactersUseCase(get()) }
+    single { GetSectionInfoUseCase(get()) }
     single { HomeVM(get()) }
     single { ShareViewModel() }
-    single { DetailVM() }
+    single { DetailVM(get()) }
 }

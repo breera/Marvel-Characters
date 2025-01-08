@@ -18,12 +18,12 @@ val MarvelCharacters_Typography: Typography
         ),
         titleSmall = TextStyle(
             fontSize = 10.ssp,
-            fontWeight = FontWeight.Normal,
+            fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary // white
         ),
         labelMedium = TextStyle(
             fontSize = 10.ssp,
-            fontWeight = FontWeight.Bold,
+            fontWeight = FontWeight.Normal,
             color = MaterialTheme.colorScheme.onPrimary
         )
     )

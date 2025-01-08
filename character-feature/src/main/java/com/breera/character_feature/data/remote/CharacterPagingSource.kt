@@ -15,7 +15,6 @@ import com.breera.core.domain.Result
 
 class CharacterPagingSource(
     private val repository: DefaultRepository
-
 ) : PagingSource<Int, Characters>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Characters> {
