@@ -50,7 +50,12 @@ fun LoadImage(
     placeholder: Int = R.drawable.image_error,
     contentScale: ContentScale = ContentScale.Crop,
     size: Dp = 60.dp,
-    loadersize: Dp = 30.dp
+    loadersize: Dp = 30.dp,
+    loadingComposable: @Composable () -> Unit = {
+        CircularProgressIndicator(
+            color = Color.White
+        )
+    }
 ) {
     // State for image loading result
     var imageLoadResult by remember { mutableStateOf<Result<Painter>?>(null) }
@@ -86,9 +91,7 @@ fun LoadImage(
                         .size(loadersize),
                     contentAlignment = Alignment.Center
                 ) {
-                    CircularProgressIndicator(
-                        color = Color.White
-                    )
+                    loadingComposable()
                 }
             }
 

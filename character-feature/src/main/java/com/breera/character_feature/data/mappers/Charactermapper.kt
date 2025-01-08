@@ -8,6 +8,7 @@ import com.breera.character_feature.domain.model.Item
 import com.breera.character_feature.domain.model.Series
 import com.breera.character_feature.domain.model.Stories
 import com.breera.character_feature.domain.model.Thumbnail
+import com.breera.character_feature.domain.model.Url
 
 /**
  * Created by Breera Hanif on 08/01/2025.
@@ -60,7 +61,11 @@ fun List<Data.Result>.toCharacterModel(): List<Characters> {
                 }
             ),
             resourceURI = it.resourceURI,
-            urls = listOf()
+            urls = it.urls?.map { url ->
+                Url(
+                    type = url?.type, url = url?.url
+                )
+            }
         )
     }
 }

@@ -17,7 +17,7 @@ val character = Characters(
     comics = Comics(
         items = listOf(
             Item(
-                name = "Comic",
+                name = "Comic Comic Comic Comic ",
                 resourceURI = "http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg"
             ), Item(
                 name = "Comic",

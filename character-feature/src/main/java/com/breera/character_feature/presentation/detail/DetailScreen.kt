@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -69,53 +70,66 @@ fun DetailScreenRoot(viewModel: DetailVM, onClick: (DetailAction) -> Unit) {
 @Composable
 fun DetailScreen(character: Characters, onClick: (DetailAction) -> Unit) {
     MarvelCharactersAppTheme {
-        LazyColumn(
-            Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-        ) {
-            item {
-                IntroSection(character) {
-                    onClick.invoke(it)
+        Box(Modifier.fillMaxSize()) {
+            LoadImage(
+                imageUrl = "${character.thumbnail?.path}.${character.thumbnail?.extension}",
+                contentDescription = character.name,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .blur(80.sdp),
+                loadingComposable = {
+                    Box(Modifier.background(MaterialTheme.colorScheme.background))
                 }
-            }
-            if (character.comics?.items.isNullOrEmpty().not()) {
+            )
+            LazyColumn(
+                Modifier
+                    .fillMaxSize()
+            ) {
                 item {
-                    Section(
-                        title = stringResource(R.string.comics),
-                        comics = character.comics?.items ?: emptyList()
-                    )
+                    IntroSection(character) {
+                        onClick.invoke(it)
+                    }
                 }
-            }
-            if (character.series?.items.isNullOrEmpty().not()) {
-                item {
-                    Section(
-                        title = stringResource(R.string.series),
-                        comics = character.series?.items ?: emptyList()
-                    )
+                if (character.comics?.items.isNullOrEmpty().not()) {
+                    item {
+                        Section(
+                            title = stringResource(R.string.comics),
+                            comics = character.comics?.items ?: emptyList()
+                        )
+                    }
                 }
-            }
-            if (character.stories?.items.isNullOrEmpty().not()) {
-                item {
-                    Section(
-                        title = stringResource(R.string.stories),
-                        comics = character.stories?.items ?: emptyList()
-                    )
+                if (character.series?.items.isNullOrEmpty().not()) {
+                    item {
+                        Section(
+                            title = stringResource(R.string.series),
+                            comics = character.series?.items ?: emptyList()
+                        )
+                    }
                 }
-            }
-            if (character.events?.items.isNullOrEmpty().not()) {
-                item {
-                    Section(
-                        title = stringResource(R.string.events),
-                        comics = character.events?.items ?: emptyList()
-                    )
+                if (character.stories?.items.isNullOrEmpty().not()) {
+                    item {
+                        Section(
+                            title = stringResource(R.string.stories),
+                            comics = character.stories?.items ?: emptyList()
+                        )
+                    }
                 }
-            }
+                if (character.events?.items.isNullOrEmpty().not()) {
+                    item {
+                        Section(
+                            title = stringResource(R.string.events),
+                            comics = character.events?.items ?: emptyList()
+                        )
+                    }
+                }
 
-            character.urls?.let {
-                // Related links Section
-                items(it) { detail ->
-                    RelatedLinks(detail)
+                character.urls?.let {
+                    item { SectionsTitle(stringResource(R.string.related_links).uppercase()) }
+                    // Related links Section
+                    items(it) { detail ->
+                        RelatedLinks(detail)
+                    }
                 }
             }
         }
@@ -187,18 +201,17 @@ fun IntroSection(character: Characters, onClick: (DetailAction) -> Unit) {
         )
 
         // Description Section
-        character.description?.let { description ->
+        if (character.description.isNullOrEmpty().not())
             Text(
                 text = stringResource(R.string.description),
                 style = MaterialTheme.typography.titleSmall,
                 modifier = Modifier.padding(start = 10.sdp, top = 8.sdp)
             )
-            Text(
-                text = description,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(start = 10.sdp, top = 8.sdp)
-            )
-        }
+        Text(
+            text = character.description ?: "",
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(start = 10.sdp, top = 8.sdp)
+        )
     }
 }
 
@@ -219,7 +232,7 @@ fun RelatedLinks(url: Url?) {
     ) {
 
         Text(
-            text = url?.type ?: "",
+            text = url?.type?.uppercase() ?: "",
             style = MaterialTheme.typography.bodyMedium
         )
 

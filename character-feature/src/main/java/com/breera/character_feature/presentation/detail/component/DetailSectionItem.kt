@@ -12,9 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import com.breera.character_feature.domain.model.Item
+import com.breera.character_feature.presentation.previewdata.character
 import com.breera.core.presentation.LoadImage
+import com.breera.theme.theme.MarvelCharactersAppTheme
 import ir.kaaveh.sdpcompose.sdp
 
 /**
@@ -42,8 +46,19 @@ fun SectionItem(item: Item) {
             text = item.name ?: "",
             style = MaterialTheme.typography.labelMedium,
             maxLines = 2,
+            textAlign = TextAlign.Center,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.padding(top = 4.sdp)
         )
+    }
+}
+
+@Preview
+@Composable
+fun SectionItemPreview() {
+    MarvelCharactersAppTheme {
+        character.comics?.items?.get(0)?.let {
+            SectionItem(it)
+        }
     }
 }
