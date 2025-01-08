@@ -50,7 +50,7 @@ import org.koin.compose.viewmodel.koinViewModel
  */
 
 @Composable
-fun HomeScreenRoot() {
+fun HomeScreenRoot(onClick: (Characters) -> Unit) {
     val context = LocalContext.current
     MarvelCharactersAppTheme {
         val viewModel = koinViewModel<HomeVM>()
@@ -62,7 +62,7 @@ fun HomeScreenRoot() {
                 }
 
                 is HomeAction.OnDetailCharacterRequest -> {
-                    // move to next screen
+                    onClick(it.character)
                 }
             }
         }
@@ -123,7 +123,9 @@ fun HomeScreen(characters: LazyPagingItems<Characters>, onClick: (HomeAction) ->
                 },
             characters = characters
         )
-        {}
+        {
+            onClick(HomeAction.OnDetailCharacterRequest(it))
+        }
     }
 }
 
@@ -178,7 +180,7 @@ fun MarvelCharacterList(
                             characters[index]?.let {
                                 CharacterItem(
                                     character = it,
-                                    onClick = { onCharacterClick(character) }
+                                    onClick = { onCharacterClick(it) }
                                 )
                             }
                         }

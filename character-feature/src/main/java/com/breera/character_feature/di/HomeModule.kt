@@ -5,7 +5,9 @@ import com.breera.character_feature.data.remote.DefaultRepository
 import com.breera.character_feature.data.remote.DefaultRepositoryImpl
 import com.breera.character_feature.domain.CharactersRepository
 import com.breera.character_feature.domain.GetCharactersUseCase
+import com.breera.character_feature.presentation.detail.DetailVM
 import com.breera.character_feature.presentation.home.HomeVM
+import com.breera.character_feature.presentation.shareddata.ShareViewModel
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -19,4 +21,6 @@ val homeModule = module {
     singleOf(::DefaultRepositoryImpl).bind<DefaultRepository>()
     single { GetCharactersUseCase(get()) }
     single { HomeVM(get()) }
+    single { ShareViewModel() }
+    single { DetailVM() }
 }

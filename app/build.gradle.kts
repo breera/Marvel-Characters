@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -61,14 +62,17 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.paging.compose.android)
     implementation(libs.bundles.koin)
+    implementation(libs.jetbrains.compose.navigation)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
+    implementation(libs.kotlinx.serialization.json)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(project(":theme"))
     implementation(project(":core"))
     implementation(project(":character-feature"))
+
 }

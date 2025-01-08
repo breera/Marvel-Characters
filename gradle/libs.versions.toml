@@ -13,6 +13,7 @@ pagingComposeAndroid = "3.3.5"
 sdpCompose = "1.1.0"
 appcompat = "1.7.0"
 constraint = "1.1.0"
+serialization = "1.6.0"
 ktor = "3.0.0"
 koin = "4.0.0"
 coil3 = "3.0.0-rc02"
@@ -20,6 +21,7 @@ material = "1.12.0"
 uiGraphicsAndroid = "1.6.6"
 uiAndroidVersion = "1.7.0"
 pagingCompose = "3.2.0"
+navigationCompose = "2.8.0-alpha10"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -41,6 +43,7 @@ androidx-paging-compose-android = { group = "androidx.paging", name = "paging-co
 sdp-compose = { module = "com.github.Kaaveh:sdp-compose", version.ref = "sdpCompose" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 compose-constraint-layout = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraint" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx",name = "kotlinx-serialization-json",version.ref = "serialization" }
 
 
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
@@ -69,6 +72,8 @@ androidx-ui-android = { group = "androidx.compose.ui", name = "ui-android", vers
 
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingCompose" }
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingCompose" }
+jetbrains-compose-navigation = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref= "navigationCompose"}
+androidx-compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref= "navigationCompose"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

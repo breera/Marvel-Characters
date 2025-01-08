@@ -24,13 +24,30 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.rememberAsyncImagePainter
 import coil3.request.CachePolicy
 import coil3.request.ImageRequest
+import com.breera.core.R
+
+
+/**
+ * A composable function for loading and displaying an image from a URL with a placeholder and loading indicator.
+ *
+ * `LoadImage` handles the asynchronous loading of an image using Coil, displaying a placeholder while loading
+ * and a loading spinner if needed. It also applies a gradient overlay for a stylish effect.
+ *
+ * @param imageUrl The URL of the image to load. If null, the placeholder will be shown.
+ * @param contentDescription A description of the image for accessibility purposes.
+ * @param modifier A Modifier for customizing the layout or appearance of the image.
+ * @param placeholder A drawable resource ID to use as a placeholder if the image fails to load.
+ * @param contentScale How the image should be scaled within its bounds.
+ * @param size The size of the image to be displayed.
+ * @param loadersize The size of the loading spinner shown while the image is loading.
+ */
 
 @Composable
 fun LoadImage(
     imageUrl: String?,
     contentDescription: String?,
     modifier: Modifier = Modifier,
-    placeholder: Int = 0,
+    placeholder: Int = R.drawable.image_error,
     contentScale: ContentScale = ContentScale.Crop,
     size: Dp = 60.dp,
     loadersize: Dp = 30.dp
@@ -41,8 +58,8 @@ fun LoadImage(
     val painter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(LocalContext.current)
             .data(imageUrl)
-            .diskCachePolicy(CachePolicy.ENABLED) // Cache on disk
-            .memoryCachePolicy(CachePolicy.ENABLED) // Cache in memory
+            .diskCachePolicy(CachePolicy.ENABLED)
+            .memoryCachePolicy(CachePolicy.ENABLED)
             .build(),
         onSuccess = {
             imageLoadResult =
@@ -76,7 +93,11 @@ fun LoadImage(
             }
 
             else -> {
-                Box(modifier.size(size)) {
+                Box(
+                    modifier
+                        .size(size)
+                        .background(Color.White)
+                ) {
                     Image(
                         painter = if (result.isSuccess) painter else painterResource(placeholder),
                         contentDescription = contentDescription,
