@@ -8,7 +8,7 @@ import com.breera.character_feature.domain.model.Thumbnail
 
 val character = Characters(
     id = 1,
-    name = "asas",
+    name = "Long Long Name Long",
     description = "sdsd",
     thumbnail = Thumbnail(
         path = "http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784",

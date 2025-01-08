@@ -16,7 +16,31 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"${project.findProperty("BASE_URL")}\"")
+            buildConfigField(
+                "String",
+                "PRIVATE_API_KEY",
+                "\"${project.findProperty("PRIVATE_API_KEY")}\""
+            )
+            buildConfigField(
+                "String",
+                "PUBLIC_API_KEY",
+                "\"${project.findProperty("PUBLIC_API_KEY")}\""
+            )
+        }
         release {
+            buildConfigField("String", "BASE_URL", "\"${project.findProperty("BASE_URL")}\"")
+            buildConfigField(
+                "String",
+                "PRIVATE_API_KEY",
+                "\"${project.findProperty("PRIVATE_API_KEY")}\""
+            )
+            buildConfigField(
+                "String",
+                "PUBLIC_API_KEY",
+                "\"${project.findProperty("PUBLIC_API_KEY")}\""
+            )
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -34,6 +58,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"

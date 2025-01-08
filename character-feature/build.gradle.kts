@@ -58,6 +58,9 @@ dependencies {
     implementation(project(":core"))
     implementation(libs.bundles.coil)
     implementation(libs.androidx.foundation)
+    // Paging Library
+    implementation(libs.androidx.paging.compose)
+    implementation(libs.androidx.paging.runtime)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
