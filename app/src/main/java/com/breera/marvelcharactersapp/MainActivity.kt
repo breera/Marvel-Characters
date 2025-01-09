@@ -22,6 +22,8 @@ import com.breera.character_feature.presentation.detail.DetailAction
 import com.breera.character_feature.presentation.detail.DetailScreenRoot
 import com.breera.character_feature.presentation.detail.DetailVM
 import com.breera.character_feature.presentation.home.HomeScreenRoot
+import com.breera.character_feature.presentation.pager.CharacterPagerViewScreenRoot
+import com.breera.character_feature.presentation.pager.PagerViewVM
 import com.breera.character_feature.presentation.shareddata.ShareViewModel
 import com.breera.theme.theme.MarvelCharactersAppTheme
 import org.koin.compose.viewmodel.koinViewModel
@@ -65,9 +67,9 @@ class MainActivity : ComponentActivity() {
                             val viewModel = koinViewModel<DetailVM>()
                             val selectedCharacterViewModel =
                                 entry.sharedKoinViewModel<ShareViewModel>(navController)
-                            val selectedBook by selectedCharacterViewModel.selectedCharacter.collectAsStateWithLifecycle()
-                            LaunchedEffect(selectedBook) {
-                                selectedBook?.let {
+                            val selectedCharacter by selectedCharacterViewModel.selectedCharacter.collectAsStateWithLifecycle()
+                            LaunchedEffect(selectedCharacter) {
+                                selectedCharacter?.let {
                                     viewModel.onAction(DetailAction.OnSelectedCharacterChange(it))
                                 }
                             }
@@ -79,9 +81,40 @@ class MainActivity : ComponentActivity() {
                                         navController.navigateUp()
                                     }
 
-                                    DetailAction.OnCategoryClick -> TODO()
-                                    is DetailAction.OnSelectedCharacterChange -> TODO()
+                                    is DetailAction.OnCategoryClick -> {
+                                        selectedCharacterViewModel.onSelectSection(it.list)
+                                        navController.navigate(Route.CharacterPager)
+                                    }
+
+                                    is DetailAction.OnSelectedCharacterChange -> {
+                                        // nothing to do now
+                                    }
                                 }
+                            }
+                        }
+                        composable<Route.CharacterPager>(
+                            enterTransition = {
+                                slideInHorizontally { initialOffset ->
+                                    initialOffset
+                                }
+                            },
+                            exitTransition = {
+                                slideOutHorizontally { initialOffset ->
+                                    initialOffset
+                                }
+                            }
+                        ) { entry ->
+                            val viewModel = koinViewModel<PagerViewVM>()
+                            val selectedCharacterViewModel =
+                                entry.sharedKoinViewModel<ShareViewModel>(navController)
+                            val selectedCharacter by selectedCharacterViewModel.selectedSection.collectAsStateWithLifecycle()
+                            LaunchedEffect(selectedCharacter) {
+                                selectedCharacter?.let {
+                                    viewModel.onSectionInfoCollect(it)
+                                }
+                            }
+                            CharacterPagerViewScreenRoot(viewModel) {
+                                navController.navigateUp()
                             }
                         }
                     }
@@ -90,6 +123,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 
 @Composable
 private inline fun <reified T : ViewModel> NavBackStackEntry.sharedKoinViewModel(

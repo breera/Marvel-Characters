@@ -1,6 +1,7 @@
 package com.breera.character_feature.presentation.detail
 
 import com.breera.character_feature.domain.model.Characters
+import com.breera.character_feature.domain.model.Item
 
 /**
  * Created by Breera Hanif on 06/01/2025.
@@ -27,7 +28,7 @@ sealed interface DetailAction {
      * This action is used when the user interacts with a category, potentially to
      * view more information related to that category.
      */
-    data object OnCategoryClick : DetailAction
+    data class OnCategoryClick(val list: List<Item>, val type: SectionType) : DetailAction
 
     /**
      * Represents the action of changing the selected character.

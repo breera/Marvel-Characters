@@ -122,7 +122,13 @@ fun DetailScreen(
                             comicList,
                             character.comics?.items ?: emptyList(),
                             stringResource(R.string.comics)
-                        )
+                        ) {
+                            onClick(
+                                DetailAction.OnCategoryClick(
+                                    character.comics?.items ?: emptyList(), SectionType.COMIC
+                                )
+                            )
+                        }
                     }
                 }
                 if (character.series?.items.isNullOrEmpty().not()) {
@@ -131,7 +137,13 @@ fun DetailScreen(
                             seriesList,
                             character.series?.items ?: emptyList(),
                             stringResource(R.string.series)
-                        )
+                        ) {
+                            onClick(
+                                DetailAction.OnCategoryClick(
+                                    character.series?.items ?: emptyList(), SectionType.SERIES
+                                )
+                            )
+                        }
                     }
                 }
                 if (character.stories?.items.isNullOrEmpty().not()) {
@@ -140,7 +152,13 @@ fun DetailScreen(
                             storiesList,
                             character.stories?.items ?: emptyList(),
                             stringResource(R.string.stories)
-                        )
+                        ) {
+                            onClick(
+                                DetailAction.OnCategoryClick(
+                                    character.stories?.items ?: emptyList(), SectionType.STORIES
+                                )
+                            )
+                        }
                     }
                 }
                 if (character.events?.items.isNullOrEmpty().not()) {
@@ -149,7 +167,13 @@ fun DetailScreen(
                             eventsList,
                             character.events?.items ?: emptyList(),
                             stringResource(R.string.events)
-                        )
+                        ) {
+                            onClick(
+                                DetailAction.OnCategoryClick(
+                                    character.events?.items ?: emptyList(), SectionType.EVENTS
+                                )
+                            )
+                        }
                     }
                 }
 

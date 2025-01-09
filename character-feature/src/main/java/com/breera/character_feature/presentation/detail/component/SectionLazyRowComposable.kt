@@ -40,7 +40,8 @@ import ir.kaaveh.sdpcompose.sdp
 fun SectionLazyRowComposable(
     singleCharacterList: LazyPagingItems<SingleSectionInfoModel>,
     items: List<Item>,
-    title: String
+    title: String,
+    onCLick: () -> Unit
 ) {
     val loadState = singleCharacterList.loadState
     when (loadState.refresh) {
@@ -77,7 +78,9 @@ fun SectionLazyRowComposable(
 
                     items(singleCharacterList.itemCount) { index ->
                         singleCharacterList[index]?.let {
-                            SectionItem(it.name, it.imageUrl)
+                            SectionItem(it.name, it.imageUrl) {
+                                onCLick()
+                            }
                         }
                     }
 

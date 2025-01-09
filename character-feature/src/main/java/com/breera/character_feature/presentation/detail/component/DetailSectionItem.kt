@@ -1,5 +1,6 @@
 package com.breera.character_feature.presentation.detail.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,7 +31,7 @@ import ir.kaaveh.sdpcompose.sdp
  */
 
 @Composable
-fun SectionItem(name: String, imageUrl: String) {
+fun SectionItem(name: String, imageUrl: String, onClick: () -> Unit) {
     Column(
         modifier = Modifier
             .padding(start = 10.sdp)
@@ -44,6 +45,9 @@ fun SectionItem(name: String, imageUrl: String) {
                 .fillMaxWidth()
                 .height(140.sdp)
                 .clip(RoundedCornerShape(8.sdp))
+                .clickable {
+                    onClick()
+                }
         )
 
         Text(
@@ -99,7 +103,7 @@ fun SectionItemPreview() {
         SectionItem(
             name = "Margaret Gill",
             imageUrl = "https://www.google.com/#q=faucibus"
-        )
+        ){}
     }
 }
 

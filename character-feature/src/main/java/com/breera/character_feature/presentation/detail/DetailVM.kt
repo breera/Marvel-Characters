@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.update
  */
 
 class DetailVM(private val getSectionInfoUseCase: GetSectionInfoUseCase) : ViewModel() {
-    private val _characterDetailState = MutableStateFlow(DetailState())
+    private var _characterDetailState = MutableStateFlow(DetailState())
     val characterDetailState = _characterDetailState.asStateFlow()
 
     /**

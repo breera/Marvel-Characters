@@ -24,5 +24,5 @@ sealed interface Route {
     data object CharacterDetail : Route
 
     @Serializable
-    data class CharacterPager(val characters: Characters) : Route
+    data object CharacterPager : Route
 }

@@ -8,6 +8,7 @@ import com.breera.character_feature.domain.GetCharactersUseCase
 import com.breera.character_feature.domain.GetSectionInfoUseCase
 import com.breera.character_feature.presentation.detail.DetailVM
 import com.breera.character_feature.presentation.home.HomeVM
+import com.breera.character_feature.presentation.pager.PagerViewVM
 import com.breera.character_feature.presentation.shareddata.ShareViewModel
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
@@ -25,4 +26,5 @@ val homeModule = module {
     single { HomeVM(get()) }
     single { ShareViewModel() }
     single { DetailVM(get()) }
+    single { PagerViewVM(get()) }
 }

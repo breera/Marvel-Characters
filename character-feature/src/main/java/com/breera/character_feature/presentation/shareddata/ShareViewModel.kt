@@ -2,6 +2,7 @@ package com.breera.character_feature.presentation.shareddata
 
 import androidx.lifecycle.ViewModel
 import com.breera.character_feature.domain.model.Characters
+import com.breera.character_feature.domain.model.Item
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -18,7 +19,14 @@ class ShareViewModel : ViewModel() {
     private var _selectedCharacter = MutableStateFlow<Characters?>(null)
     val selectedCharacter = _selectedCharacter.asStateFlow()
 
+    private var _selectedSection = MutableStateFlow<List<Item>?>(null)
+    val selectedSection = _selectedSection.asStateFlow()
+
     fun onSelectCharacter(character: Characters?) {
         _selectedCharacter.value = character
+    }
+
+    fun onSelectSection(section: List<Item>) {
+        _selectedSection.value = section
     }
 }
