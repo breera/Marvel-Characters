@@ -1,7 +1,3 @@
-Here's a sample README file tailored for your project, highlighting its modular architecture and features:
-
----
-
 # Marvel Characters App
 
 Marvel Characters App is a sample project showcasing Clean Architecture principles with a modularized approach. It demonstrates fetching and displaying Marvel characters, utilizing the Paging 3 library for efficient data handling and Kotlin-based architecture components.
@@ -100,6 +96,9 @@ character-feature/
 
 2. **Character Details**:
    - Displays detailed information about a selected character.
+   - 
+3. **LazyLoadImages**:
+   - Instead of fetching all images atonce by giving id , it fetches one image from one API using resourceURI as per requirements.
 
 3. **Reusable Components**:
    - A modular and scalable design that ensures reusability.
@@ -136,27 +135,3 @@ To run the tests:
 ```bash
 ./gradlew test
 ```
-
-### UI Testing
-UI tests are located in the `androidTest` directory and use Espresso.
-
-To run UI tests:
-```bash
-./gradlew connectedAndroidTest
-```
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to open issues or submit pull requests.
-
----
-
-## 📜 License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
-
---- 
-
-Would you like to customize any sections further?
