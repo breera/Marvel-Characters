@@ -78,6 +78,12 @@ character-feature/
 
 ---
 
+## Application screen shot
+
+<img width="839" alt="image" src="https://github.com/user-attachments/assets/1825d647-0248-4c16-9723-b7a6d97f4d4b" />
+<img width="839" alt="image" src="https://github.com/user-attachments/assets/6261aea8-72f3-4f6d-a07f-0d80bfc6b80f" />
+
+
 ## 🛠️ Tech Stack
 
 - **Kotlin**: Primary language for app development.
